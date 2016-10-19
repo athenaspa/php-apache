@@ -40,5 +40,8 @@ RUN mv composer.phar /usr/local/bin/composer
 
 WORKDIR /var/www/html
 
+# During the building of the container let's instantiate the environment
+ONBUILD RUN composer install && vendor/bin/robo config:settings
+
 # Exposing ports
 EXPOSE 80
