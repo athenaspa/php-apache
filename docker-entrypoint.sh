@@ -2,19 +2,13 @@
 set -e
 
 # Post deployment Assets warm up
-if [ -d /var/www/html/drupal ];
-then
-  if [ ! -d /var/www/html/drupal/vendor ]
+echo "Installing Composer Dependencies"
+cd /var/www/html && composer install --no-interaction;
+if [ ! -f /var/www/html/web/sites/default/settings.local.php ];
   then
-      cd /var/www/html/drupal && composer install --no-interaction;
+      echo "Setting up Drupal"
+      cd /var/www/html && vendor/bin/robo config:settings;
   fi
-fi
-
-if [ ! -f /var/www/html/drupal/web/sites/default/settings.local.php ];
-then
-    cd /var/www/html/drupal && vendor/bin/robo config:settings;
-fi
-
 
 # Start supervisord
 echo "Start Supervisord"

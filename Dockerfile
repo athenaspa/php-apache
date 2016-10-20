@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     ssmtp \
     patch \
     unzip \
+		nano \
     openssh-server \
     libpng12-dev \
     libjpeg-dev \
