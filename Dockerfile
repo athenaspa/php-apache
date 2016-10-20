@@ -2,10 +2,24 @@ FROM php:7-apache
 RUN a2enmod rewrite
 
 # install the PHP extensions we need (git for Composer, mysql-client for mysqldump)
-RUN apt-get update && apt-get install -y libpng12-dev libjpeg-dev libpq-dev git mysql-client-5.5 wget nano \
+RUN apt-get update && apt-get install -y \
+    supervisor \
+    git \
+    wget \
+    mysql-client \
+    ssmtp \
+    patch \
+    unzip \
+    openssh-server \
+    libpng12-dev \
+    libjpeg-dev \
+    libpq-dev \
+    libxml2-dev \
+    libcurl3 \
+    libcurl4-gnutls-dev \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-	&& docker-php-ext-install gd mbstring opcache pdo pdo_mysql pdo_pgsql zip
+	&& docker-php-ext-install gd mbstring opcache pdo pdo_mysql pdo_pgsql zip calendar json curl xml soap
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
@@ -42,3 +56,9 @@ WORKDIR /var/www/html
 
 # Exposing ports
 EXPOSE 80
+
+COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
+
+# Command
+CMD ["/usr/local/bin/docker-entrypoint.sh"]
