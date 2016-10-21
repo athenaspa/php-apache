@@ -3,7 +3,6 @@ RUN a2enmod rewrite
 
 # install the PHP extensions we need (git for Composer, mysql-client for mysqldump)
 RUN apt-get update && apt-get install -y \
-    supervisor \
     git \
     wget \
     mysql-client \
@@ -58,8 +57,8 @@ WORKDIR /var/www/html
 # Exposing ports
 EXPOSE 80
 
-COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
+COPY ./docker-entrypoint.sh /usr/local/bin/docker-entrypoint
+RUN chmod a+x /usr/local/bin/docker-entrypoint
 
 # Command
-CMD ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["docker-entrypoint"]
