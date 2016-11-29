@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Change uid and gid of www-data to match current dir's owner
+/usr/local/bin/match-current-dirs-owner
+
 # Post deployment Assets warm up
 cd /var/www/html
 composer install --no-interaction --quiet

@@ -62,7 +62,8 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
 WORKDIR /var/www/html
 
 # This will fix problem with permission
-RUN usermod -u 1000 www-data
+COPY ./match-current-dirs-owner.sh /usr/local/bin/match-current-dirs-owner
+RUN chmod a+x /usr/local/bin/match-current-dirs-owner
 
 # Exposing ports
 EXPOSE 80
