@@ -63,6 +63,7 @@ WORKDIR /var/www/html
 
 # This will fix problem with permission
 COPY ./match-current-dirs-owner.sh /usr/local/bin/match-current-dirs-owner
+RUN chmod a+x /usr/local/bin/match-current-dirs-owner
 
 # Exposing ports
 EXPOSE 80
