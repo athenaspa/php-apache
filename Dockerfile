@@ -59,6 +59,9 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
   && php -r "unlink('composer-setup.php');" \
   && chmod +x /usr/local/bin/composer
 
+# We hold public files in mounted devices
+VOLUME ["/var/www/html/web/sites/default/files"]
+
 WORKDIR /var/www/html
 
 # This will fix problem with permission
