@@ -8,7 +8,7 @@ Sample *docker-compose.yml* file:
 ```yaml
 web:
   container_name: athenaparts
-  image: athenaspa/php-apache
+  image: athenagroup/php-apache
   links:
     - db
     - mailcatcher
