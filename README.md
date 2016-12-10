@@ -1,4 +1,4 @@
-# ath-mmd
+# php-apache
 Old school enviroment: PHP 5.4 + MySQL 5  
 only for testing pourpose  
 https://hub.docker.com/r/athenagroup/php-apache/
