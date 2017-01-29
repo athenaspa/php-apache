@@ -7,7 +7,7 @@ Sample *docker-compose.yml* file:
 
 ```yaml
 web:
-  container_name: athenaparts
+  container_name: athena_amd
   image: athenagroup/php-apache
   links:
     - db
@@ -15,7 +15,7 @@ web:
   ports:
     - "8080:80"
   volumes:
-    - "/wwwroot/athenaparts.com:/var/www"
+    - "./:/var/www"
   environment:
     DOCUMENT_ROOT: "/var/www"
     ENVIRONMENT: dev
@@ -27,9 +27,9 @@ db:
   volumes:
     - "/var/lib/mysql"
   environment:
-    MYSQL_PASS: athmmd
+    MYSQL_PASS: admin
     MYSQL_USER: admin
-    ON_CREATE_DB: athenaparts
+    ON_CREATE_DB: athena_amd
 
 mailcatcher:
   image: helder/mailcatcher
