@@ -12,6 +12,7 @@ ENV TERM xterm
 RUN \
   apt-get update && \
   apt-get install -y \
+  ssmtp \
   curl \
   wget \
   nano \
@@ -56,8 +57,15 @@ RUN \
   apt-get clean && \
   rm -rf /var/lib/apt/lists
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Install Composer
+RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
+    && curl -o /tmp/composer-setup.sig https://composer.github.io/installer.sig \
+    && php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { unlink('/tmp/composer-setup.php'); echo 'Invalid installer' . PHP_EOL; exit(1); }"
+RUN php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer \
+  	&& rm /tmp/composer-setup.php \
+    && chmod +x /usr/local/bin/composer
 
+# Configure timezone
 RUN echo Europe/Rome > /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata
 
 RUN { echo 'en_GB ISO-8859-1'; \
@@ -66,6 +74,9 @@ echo 'en_US ISO-8859-1'; \
 echo 'en_US.ISO-8859-15 ISO-8859-15'; \
 echo 'en_US.UTF-8 UTF-8'; \
 } >> /etc/locale.gen && usr/sbin/locale-gen
+
+# Send mail conf
+RUN echo "mailhub=mailcatcher:25\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
 
 RUN ln -sf /dev/stderr /var/log/apache2/error.log
 
