@@ -3,7 +3,7 @@ FROM debian:wheezy
 MAINTAINER Emanuel Righetto <posta@emanuelrighetto.it>
 
 # Add Apache var
-ENV DOCUMENT_ROOT /var/www/html
+ENV DOCUMENT_ROOT /var/www
 ENV ENVIRONMENT dev
 
 # Running nano in docker container
@@ -93,6 +93,6 @@ RUN chmod +x /run.sh
 EXPOSE 80
 EXPOSE 443
 
-WORKDIR DOCUMENT_ROOT
+WORKDIR /var/www
 
 CMD ["/run.sh"]

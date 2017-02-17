@@ -25,7 +25,7 @@ db:
   ports:
     - "3306:3306"
   volumes:
-    - "/var/lib/mysql"
+    - "./.db_data:/var/lib/mysql"
   environment:
     MYSQL_PASS: admin
     MYSQL_USER: admin
