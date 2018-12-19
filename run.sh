@@ -8,7 +8,7 @@ APACHE_RUN_GROUP=${APACHE_RUN_GROUP:=33}
 usermod -u $APACHE_RUN_USER www-data
 groupmod -g $APACHE_RUN_GROUP www-data
 
-chown -R www-data:www-data /var/www/html
+chown -R www-data:www-data /var/www
 
 # Apache gets grumpy about PID files pre-existing
 rm -f /var/run/apache2/apache2.pid && \
