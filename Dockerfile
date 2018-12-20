@@ -1,10 +1,10 @@
 FROM debian:wheezy
 
-MAINTAINER Emanuel Righetto <posta@emanuelrighetto.it>
-
-# Add Apache var
-ENV DOCUMENT_ROOT /var/www
-ENV ENVIRONMENT dev
+# Add Environment var
+ENV DOCUMENT_ROOT /var/www \
+    ENVIRONMENT dev \
+    SSMTP_SERVER mailhog \
+    SSMTP_PORT 1025
 
 # Running nano in docker container
 ENV TERM xterm
@@ -17,6 +17,7 @@ RUN \
   wget \
   nano \
   git \
+  unzip \
   locales \
   iptables \
   apache2 \
@@ -76,7 +77,7 @@ echo 'en_US.UTF-8 UTF-8'; \
 } >> /etc/locale.gen && usr/sbin/locale-gen
 
 # Send mail conf
-RUN echo "mailhub=mailcatcher:25\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
+RUN echo "mailhub=${SSMTP_SERVER}:${SSMTP_PORT}\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
 
 RUN ln -sf /dev/stderr /var/log/apache2/error.log
 
