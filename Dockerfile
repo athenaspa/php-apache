@@ -76,9 +76,6 @@ echo 'en_US.ISO-8859-15 ISO-8859-15'; \
 echo 'en_US.UTF-8 UTF-8'; \
 } >> /etc/locale.gen && usr/sbin/locale-gen
 
-# Send mail conf
-RUN echo "mailhub=${SSMTP_SERVER}:${SSMTP_PORT}\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf
-
 RUN ln -sf /dev/stderr /var/log/apache2/error.log
 
 COPY httpd/dummy.crt  /etc/ssl/crt/dummy.crt
